@@ -1,8 +1,10 @@
 package telran.java48.book.controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,60 +17,59 @@ import telran.java48.book.service.BookService;
 @RequiredArgsConstructor
 public class BookController {
 	final BookService bookService;
-	
-	
+
 	@PostMapping("/book")
 	public boolean addBook(@RequestBody BookDto bookDto) {
-		
+
 		return bookService.addBook(bookDto);
 	}
 
 	@GetMapping("/book/{isbn}")
 	public BookDto findBookByIsbn(@PathVariable String isbn) {
-		
+
 		return bookService.findBookByIsbn(isbn);
 	}
 
-	
-	public BookDto remove(String isbn) {
-		
-		return null;
+	@DeleteMapping("/book/{isbn}")
+	public BookDto remove(@PathVariable String isbn) {
+
+		return bookService.remove(isbn);
 	}
 
-	
-	public BookDto updateBook(String isbn, String title) {
-		
-		return null;
+	@PutMapping("/book/{isbn}/title/{title}")
+	public BookDto updateBook(@PathVariable String isbn, @PathVariable String title) {
+
+		return bookService.updateBook(isbn, title);
 	}
 
-	
-	public Iterable<BookDto> findBooksByAuthor(String authorName) {
-		
-		return null;
+	@GetMapping("/books/author/{authorName}")
+	public Iterable<BookDto> findBooksByAuthor(@PathVariable String authorName) {
+
+		return bookService.findBooksByAuthor(authorName);
 	}
 
-	
-	public Iterable<BookDto> findBooksByPublisher(String publisherName) {
-		
-		return null;
+	@GetMapping("/books/publisher/{publisherName}")
+	public Iterable<BookDto> findBooksByPublisher(@PathVariable String publisherName) {
+
+		return bookService.findBooksByPublisher(publisherName);
 	}
 
-	
-	public Iterable<AuthorDto> findBookAuthors(String isbn) {
-		
-		return null;
+	@GetMapping("/publishers/authors/book/{isbn}")
+	public Iterable<AuthorDto> findBookAuthors(@PathVariable String isbn) {
+
+		return bookService.findBookAuthors(isbn);
 	}
 
-	
-	public Iterable<String> findPublishersByAuthor(String authorName) {
-		
-		return null;
+	@GetMapping("/author/{authorName}")
+	public Iterable<String> findPublishersByAuthor(@PathVariable String authorName) {
+
+		return bookService.findPublishersByAuthor(authorName);
 	}
 
-	
-	public AuthorDto removeAuthor(String authorName) {
-		
-		return null;
+	@DeleteMapping("/author/{authorName}")
+	public AuthorDto removeAuthor(@PathVariable String authorName) {
+
+		return bookService.removeAuthor(authorName);
 	}
 
 }
