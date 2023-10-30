@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AuthorDto {
 	String name;
-	LocalDate birthDate;
+    LocalDate birthDate;
 }
