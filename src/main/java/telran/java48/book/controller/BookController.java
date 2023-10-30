@@ -13,9 +13,11 @@ import telran.java48.book.dto.AuthorDto;
 import telran.java48.book.dto.BookDto;
 import telran.java48.book.service.BookService;
 
+
 @RestController
 @RequiredArgsConstructor
 public class BookController {
+	
 	final BookService bookService;
 
 	@PostMapping("/book")
@@ -41,6 +43,8 @@ public class BookController {
 
 		return bookService.updateBook(isbn, title);
 	}
+	
+	
 
 	@GetMapping("/books/author/{authorName}")
 	public Iterable<BookDto> findBooksByAuthor(@PathVariable String authorName) {
@@ -53,12 +57,14 @@ public class BookController {
 
 		return bookService.findBooksByPublisher(publisherName);
 	}
+	
 
 	@GetMapping("/publishers/authors/book/{isbn}")
 	public Iterable<AuthorDto> findBookAuthors(@PathVariable String isbn) {
 
 		return bookService.findBookAuthors(isbn);
 	}
+	
 
 	@GetMapping("/author/{authorName}")
 	public Iterable<String> findPublishersByAuthor(@PathVariable String authorName) {
