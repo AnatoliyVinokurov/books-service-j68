@@ -23,11 +23,15 @@ import lombok.Setter;
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 7072174049171144815L;
+	
 	@Id
 	String isbn;
+	
 	String title;
+	
 	@ManyToMany
 	Set<Author> authors;
+	
 	@ManyToOne
 	Publisher publisher;
 }

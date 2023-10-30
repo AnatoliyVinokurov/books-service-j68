@@ -77,8 +77,9 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Iterable<BookDto> findBooksByPublisher(String publisherName) {
-		// TODO Auto-generated method stub
-		return null;
+		return bookRepository.findByAuthorsName(publisherName)
+	            .map(b -> modelMapper.map(b, BookDto.class))
+	            .collect(Collectors.toList());
 	}
 
 	@Override
@@ -92,13 +93,18 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Iterable<String> findPublishersByAuthor(String authorName) {
 		// TODO Auto-generated method stub
+		//Many To Many отношения между Author и Book
+		//ManyToOneотношения между Book и Publisher.
+		//сначало нужно найти всех авторов по книгам а потом книги по паблиш, и установить связь авторов с паблиш...
 		return null;
 	}
 
 	@Override
 	public AuthorDto removeAuthor(String authorName) {
-		// TODO Auto-generated method stub
-		return null;
+		Author author = authorRepository.findById(authorName)
+	            .orElseThrow(EntityNotFoundException::new);
+	    authorRepository.delete(author);
+	    return modelMapper.map(author, AuthorDto.class);
 	}
 
 }
