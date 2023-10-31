@@ -76,10 +76,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Iterable<BookDto> findBooksByPublisher(String publisherName) {
-		return bookRepository.findByAuthorsName(publisherName)
-	            .map(b -> modelMapper.map(b, BookDto.class))
-	            .collect(Collectors.toList());
+		return bookRepository.findByPublisherPublisherName(publisherName)
+				.map(b -> modelMapper.map(b, BookDto.class))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -92,19 +93,16 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Iterable<String> findPublishersByAuthor(String authorName) {
-		// TODO Auto-generated method stub
-		//Many To Many отношения между Author и Book
-		//ManyToOneотношения между Book и Publisher.
-		//сначало нужно найти всех авторов по книгам а потом книги по паблиш, и установить связь авторов с паблиш...
-		return null;
+		return publisherRepository.findByPublishersByAuthor(authorName);
 	}
 
 	@Override
+	@Transactional
 	public AuthorDto removeAuthor(String authorName) {
-		Author author = authorRepository.findById(authorName)
-	            .orElseThrow(EntityNotFoundException::new);
-	    authorRepository.delete(author);
-	    return modelMapper.map(author, AuthorDto.class);
+		Author author = authorRepository.findById(authorName).orElseThrow(EntityNotFoundException::new);
+		bookRepository.findByAuthorsName(authorName).forEach(b -> bookRepository.delete(b));
+		authorRepository.deleteById(authorName);
+		return modelMapper.map(author, AuthorDto.class);
 	}
 
 }
