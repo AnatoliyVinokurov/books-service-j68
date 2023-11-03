@@ -20,19 +20,18 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "publisherName")
 @Entity
 public class Publisher implements Serializable {
-	
+
 	private static final long serialVersionUID = 504401368457660385L;
-	
+
 	@Id
 	String publisherName;
 	@OneToMany(mappedBy = "publisher")
 	Set<Book> books;
-	
+
 	public Publisher(String publisherName) {
-		super();
 		this.publisherName = publisherName;
 	}
-	
+
 	@Override
 	public String toString() {
 		return publisherName;
