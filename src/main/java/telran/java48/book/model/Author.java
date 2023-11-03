@@ -21,23 +21,19 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(of = "name")
 @Entity
-public class Author implements Serializable{
-	
+public class Author implements Serializable {
+
 	private static final long serialVersionUID = -5861276285892241835L;
-	
+
 	@Id
 	String name;
-    LocalDate birthDate;
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
+	LocalDate birthDate;
+	@ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
 	Set<Book> books;
-    
+
 	public Author(String name, LocalDate birthDate) {
-		super();
 		this.name = name;
 		this.birthDate = birthDate;
 	}
-    
-    
-    
-    
+
 }
